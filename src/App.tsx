@@ -1,5 +1,5 @@
 import '@hookstate/devtools';
-import { TourProvider } from '@reactour/tour';
+// import { TourProvider } from '@reactour/tour';
 import { createRoot } from 'react-dom/client';
 import { useNavigate, useLocation, BrowserRouter } from 'react-router-dom';
 import React, { useEffect, useState, memo, useCallback } from 'react';
@@ -7,6 +7,7 @@ import React, { useEffect, useState, memo, useCallback } from 'react';
 // import { Provider } from './components';
 import useAppRoutes from './hooks/routes';
 import NavLink from './components/NavLink';
+
 // import { tourProviderProps } from './utils';
 // import { StateListeners } from './context/ElectronContextProvider';
 
@@ -22,11 +23,17 @@ import NavLink from './components/NavLink';
 // } from './hooks/terra';
 // import { parseSearchUrl } from './utils';
 // import { ReactComponent as TerraLogo } from '../assets/terra-logo.svg';
+// import TerraLogo from './assets/icons/accounts.svg';
 // import TerrariumLettersImg from '../assets/TerrariumLettersImg.png';
 // import useAppRoutes from './hooks/routes';
 
 // import './index.css';
 // import './styles/main.css';
+
+// import logosample from './assets/icons/logosample.png'
+import LogoTest from './assets/icons/logotest';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -105,6 +112,19 @@ const App = () => {
               }`}
             /> */}
           </div>
+
+          {/* method 1 to show svg */}
+          {/* <svg xmlns="http://www.w3.org/2000/svg" fill="inherit" className="w-6 h-6 aspect-square py-2 bi bi-person-circle" viewBox="0 0 16 16">
+    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+    <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+</svg> */}
+
+          {/* method 2 to show svg */}
+          {/* <LogoTest /> */}
+
+
+            {/* method 3 to show svg */}
+            <FontAwesomeIcon icon={faUser} />
           <ul className={`py-2 mt-2 ${open ? '' : ''}`}>
             {menu.map((menuItem) => {
               if (menuItem.name === 'Settings') {
