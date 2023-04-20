@@ -1,19 +1,16 @@
 import { useRoutes } from 'react-router-dom';
-// import {
-//   // TransactionsPage,
-//   // LogsPage,
-//   BlockPage,
-//   // ContractsPage,
-//   // OnboardPage,
-//   // AccountsPage,
-// } from '../pages';
-import BlocksPage from '../pages/Block';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faTv, faBuildingLock } from '@fortawesome/free-solid-svg-icons';
+
+import BlocksPage from '../pages/Blocks';
+import LogsPage from '../pages/Logs';
 // import { ReactComponent as AccountsIcon } from '../../assets/icons/menu/accounts.svg';
 // import { ReactComponent as BlocksIcon } from '../assets/icons/blocks.svg';
 // import { ReactComponent as TransactionsIcon } from '../../assets/icons/menu/transactions.svg';
 // import { ReactComponent as ContractsIcon } from '../../assets/icons/menu/contracts.svg';
 // import { ReactComponent as LogsIcon } from '../../assets/icons/menu/logs.svg';
 // import { ReactComponent as SettingsIcon } from '../../assets/icons/menu/settings.svg';
+
 
 const useAppRoutes = ({
   handleToggleClose,
@@ -42,7 +39,7 @@ const useAppRoutes = ({
     // },
     {
       name: 'Blocks',
-      // icon: <BlocksIcon className="w-6 h-6" />,
+      icon: <FontAwesomeIcon icon={faBuildingLock} />,
       path: '/blocks',
       element: <BlocksPage />,
     },
@@ -52,12 +49,12 @@ const useAppRoutes = ({
     //   path: '/transactions',
     //   element: <TransactionsPage />,
     // },
-    // {
-    //   name: 'Logs',
-    //   icon: <LogsIcon className="w-6 h-6" />,
-    //   path: '/logs',
-    //   element: <LogsPage />,
-    // },
+    {
+      name: 'Logs',
+      icon: <FontAwesomeIcon icon={faTv} />,
+      path: '/logs',
+      element: <LogsPage />,
+    },
     // {
     //   name: 'Settings',
     //   icon: <SettingsIcon className="w-6 h-6" />,

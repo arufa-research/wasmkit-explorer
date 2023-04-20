@@ -26,8 +26,23 @@
  * ```
  */
 
+import './App';
 import './index.css';
 
-console.log('👋 This message is being logged by "renderer.js", included via webpack');
+const localNetworkPath = '/Users/uditgulati/Documents/juno';
+// (window as any).electron.invoke('startLocalNetwork', localNetworkPath)
+//   .then(function(res: string) {
+//     console.log(res); // will print "This worked!" to the browser console
+//   })
+//   .catch(function(err: Error) {
+//     console.error(err); // will print "This didn't work!" to the browser console.
+//   });
+// console.log("startLog: ", startLog);
 
-import './app';
+(window as any).electron.invoke('downloadLocalNetwork', false)
+  .then(function(res: string) {
+    console.log(res); // will print "This worked!" to the browser console
+  })
+  .catch(function(err: Error) {
+    console.error(err); // will print "This didn't work!" to the browser console.
+  });

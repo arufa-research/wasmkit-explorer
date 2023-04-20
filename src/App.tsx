@@ -8,8 +8,9 @@ import React, { useEffect, useState, memo, useCallback } from 'react';
 import useAppRoutes from './hooks/routes';
 import NavLink from './components/NavLink';
 
+// import StateListeners from './context/ElectronContextProvider';
+
 // import { tourProviderProps } from './utils';
-// import { StateListeners } from './context/ElectronContextProvider';
 
 // import { BsArrowLeftShort, BsSearch, BsCircleFill } from 'react-icons/bs';
 // import { ipcRenderer } from 'electron';
@@ -27,13 +28,10 @@ import NavLink from './components/NavLink';
 // import TerrariumLettersImg from '../assets/TerrariumLettersImg.png';
 // import useAppRoutes from './hooks/routes';
 
-// import './index.css';
 // import './styles/main.css';
 
 // import logosample from './assets/icons/logosample.png'
-import LogoTest from './assets/icons/logotest';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+// import LogoTest from './assets/icons/logotest';
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -124,7 +122,6 @@ const App = () => {
 
 
             {/* method 3 to show svg */}
-            <FontAwesomeIcon icon={faUser} />
           <ul className={`py-2 mt-2 ${open ? '' : ''}`}>
             {menu.map((menuItem) => {
               if (menuItem.name === 'Settings') {
@@ -146,13 +143,13 @@ const App = () => {
                           : 'justify-center'
                       }`}
                     >
-                      {/* <div
+                      <div
                         className={`float-left h-15 w-15 ${
                           open ? 'mr-2' : 'block'
                         }`}
                       >
                         {menuItem.icon}
-                      </div> */}
+                      </div>
                       <div
                         className={`text-white text-base font-medium items-center cursor-pointer ${
                           !open && 'hidden'
@@ -172,9 +169,9 @@ const App = () => {
                     open ? 'px-3' : 'justify-center'
                   } h-12`}
                 >
-                  {/* <div className={`float-left ${open ? 'mr-2' : 'block'}`}>
+                  <div className={`float-left ${open ? 'mr-2' : 'block'}`}>
                     {menuItem.icon}
-                  </div> */}
+                  </div>
                   <div
                     className={`text-base font-medium flex-1 items-center cursor-pointer leading-[21px] ${
                       !open && 'hidden'
