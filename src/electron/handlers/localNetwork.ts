@@ -17,19 +17,19 @@ import { WebsocketClient } from '@cosmjs/tendermint-rpc';
 // } from './messages';
 // import { store } from './store';
 // import { setDockIconDisplay, parseTxDescriptionAndMsg } from './misc';
-// import globals from './globals';
+import { localNetworkState } from '../globals';
 // import exec = util.promisify('child_process').exec);
 
 import {
   LOCAL_NETWORK_GIT,
   LOCAL_NETWORK_CFG,
   LOCAL_NETWORK_WS,
-  // LOCAL_TERRA_IS_RUNNING,
-  // LOCAL_TERRA_PATH_CONFIGURED,
-  // NEW_LOG,
+  LOCAL_NETWORK_IS_RUNNING,
+  LOCAL_NETWORK_PATH_CONFIGURED,
+  NEW_LOG,
   MEM_USE_THRESHOLD_MB,
-  // NEW_BLOCK,
-  // TX,
+  NEW_BLOCK,
+  TX,
 } from '../../utils/constants';
 
 let txWs = new WebsocketClient(LOCAL_NETWORK_WS);
@@ -67,7 +67,7 @@ export const downloadLocalNetwork = async (startNetwork: boolean) => {
   return localNetworkPath;
 };
 
-const startMemMonitor = () => {
+export const startMemMonitor = () => {
   setInterval(() => {
     if (os.freemem() < MEM_USE_THRESHOLD_MB) {
       console.error("Memory used threshold breached")
@@ -91,79 +91,84 @@ export const startLocalNetwork = async (localNetworkPath: string) => {
   return waitOn({ resources: ['http://localhost:26657'] });
 };
 
-// const subscribeToLocalNetworkEvents = async (win) => {
-//   const [localNetworkPath, liteMode] = await Promise.all([
-//     store.getLocalNetworkPath(),
-//     store.getLiteMode(),
-//   ]);
-//   const localNetworkProcess = spawn(
-//     'docker',
-//     ['compose', 'logs', ...(liteMode ? ['terrad'] : []), '-f'],
-//     {
-//       cwd: localNetworkPath,
-//       env: {
-//         PATH: `${process.env.PATH}:/usr/local/bin/`,
-//       },
-//     },
-//   );
+export const subscribeToLocalNetworkEvents = async (win: any) => {
+  // const [localNetworkPath, liteMode] = await Promise.all([
+  //   store.getLocalNetworkPath(),
+  //   store.getLiteMode(),
+  // ]);
 
-//   txWs = new WebsocketClient(LOCAL_NETWORK_WS);
-//   blockWs = new WebsocketClient(LOCAL_NETWORK_WS);
+  // TODO: fetch it from user
+  const localNetworkPath = '';
+  const liteMode = false;
 
-//   localNetworkProcess.stdout.on('data', async (data) => {
-//     try {
-//       if (win && win.isDestroyed && win.isDestroyed()) { return; }
-//       win.webContents.send(NEW_LOG, data.toString());
+  const localNetworkProcess = spawn(
+    'docker',
+    ['compose', 'logs', ...(liteMode ? ['terrad'] : []), '-f'],
+    {
+      cwd: localNetworkPath,
+      env: {
+        PATH: `${process.env.PATH}:/usr/local/bin/`,
+      },
+    },
+  );
 
-//       if (!globals.localNetwork.isRunning) {
-//         txWs.subscribeTx({}, async ({ value }) => {
-//           const { description, msg } = parseTxDescriptionAndMsg(
-//             value.TxResult.tx,
-//           );
-//           win.webContents.send(TX, { description, msg, ...value });
-//           showTxOccuredNotif(description);
-//         });
+  txWs = new WebsocketClient(LOCAL_NETWORK_WS);
+  blockWs = new WebsocketClient(LOCAL_NETWORK_WS);
 
-//         blockWs.subscribe(NEW_BLOCK, {}, ({ value }) => {
-//           win.webContents.send(NEW_BLOCK, value);
-//         });
+  localNetworkProcess.stdout.on('data', async (data) => {
+    try {
+      if (win && win.isDestroyed && win.isDestroyed()) { return; }
+      win.webContents.send(NEW_LOG, data.toString());
 
-//         txWs.start();
-//         blockWs.start();
+      if (!localNetworkState.isRunning) {
+        // txWs.subscribeTx({}, async ({ value }) => {
+        //   const { description, msg } = parseTxDescriptionAndMsg(
+        //     value.TxResult.tx,
+        //   );
+        //   win.webContents.send(TX, { description, msg, ...value });
+        //   showTxOccuredNotif(description);
+        // });
 
-//         globals.localNetwork.isRunning = true;
-//         win.webContents.send(LOCAL_TERRA_IS_RUNNING, true);
-//         win.webContents.send(LOCAL_TERRA_PATH_CONFIGURED, true);
-//         showLocalNetworkStartNotif();
-//       }
-//     } catch (err) {
-//       console.error(`Error with stdout data: ${err}`); // eslint-disable-line no-console
-//     }
-//   });
+        // blockWs.subscribe(NEW_BLOCK, {}, ({ value }) => {
+        //   win.webContents.send(NEW_BLOCK, value);
+        // });
 
-//   localNetworkProcess.stderr.on('data', (data) => {
-//     console.error(`stderr: ${data}`); // eslint-disable-line no-console
-//   });
+        // txWs.start();
+        // blockWs.start();
 
-//   localNetworkProcess.on('close', () => {
-//     try {
-//       if (win && win.isDestroyed && win.isDestroyed()) { return; }
-//       globals.localNetwork.isRunning = false;
-//       win.webContents.send(LOCAL_TERRA_IS_RUNNING, false);
-//     } catch (err) {
-//       console.error(`Error closing LocalNetwork process: ${err}`); // eslint-disable-line no-console
-//     }
-//   });
-//   return localNetworkProcess;
-// };
+        localNetworkState.isRunning = true;
+        win.webContents.send(LOCAL_NETWORK_IS_RUNNING, true);
+        win.webContents.send(LOCAL_NETWORK_PATH_CONFIGURED, true);
+        // showLocalNetworkStartNotif();
+      }
+    } catch (err) {
+      console.error(`Error with stdout data: ${err}`); // eslint-disable-line no-console
+    }
+  });
+
+  localNetworkProcess.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`); // eslint-disable-line no-console
+  });
+
+  localNetworkProcess.on('close', () => {
+    try {
+      if (win && win.isDestroyed && win.isDestroyed()) { return; }
+      localNetworkState.isRunning = false;
+      win.webContents.send(LOCAL_NETWORK_IS_RUNNING, false);
+    } catch (err) {
+      console.error(`Error closing LocalNetwork process: ${err}`); // eslint-disable-line no-console
+    }
+  });
+  return localNetworkProcess;
+};
 
 // TODO: use path type instead of string to 
 // make it platform agnostic (should work on windows, linux and mac)
 export const stopLocalNetwork = async (localNetworkPath: string) => {
   try {
     // const localNetworkPath = await store.getLocalNetworkPath();
-    // txWs.destroy();
-    // blockWs.destroy();
+    txWs.disconnect();
+    blockWs.disconnect();
 
     execSync('docker-compose stop', {
       cwd: localNetworkPath,
@@ -172,7 +177,7 @@ export const stopLocalNetwork = async (localNetworkPath: string) => {
       },
     });
 
-    // globals.localNetwork.isRunning = false;
+    // localNetworkState.isRunning = false;
     // showLocalNetworkStopNotif();
   } catch (err) {
     console.log('Network stop failed: ', err);
