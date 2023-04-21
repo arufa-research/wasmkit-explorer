@@ -6,7 +6,7 @@ import yaml from 'js-yaml';
 import waitOn from 'wait-on';
 import { app } from 'electron';
 import { spawn, execSync } from 'child_process';
-// import { WebSocketClient } from '@terra-money/terra.js';
+import { WebsocketClient } from '@cosmjs/tendermint-rpc';
 
 // import {
 //   showLocalNetworkStartNotif,
@@ -27,13 +27,13 @@ import {
   // LOCAL_TERRA_IS_RUNNING,
   // LOCAL_TERRA_PATH_CONFIGURED,
   // NEW_LOG,
-  // MEM_USE_THRESHOLD,
+  MEM_USE_THRESHOLD_MB,
   // NEW_BLOCK,
   // TX,
 } from '../../utils/constants';
 
-// let txWs = new WebSocketClient(LOCAL_NETWORK_WS);
-// let blockWs = new WebSocketClient(LOCAL_NETWORK_WS);
+let txWs = new WebsocketClient(LOCAL_NETWORK_WS);
+let blockWs = new WebsocketClient(LOCAL_NETWORK_WS);
 
 // const validateLocalNetworkPath = (url) => {
 //   try {
@@ -67,13 +67,14 @@ export const downloadLocalNetwork = async (startNetwork: boolean) => {
   return localNetworkPath;
 };
 
-// const startMemMonitor = () => {
-//   setInterval(() => {
-//     if (os.freemem() < MEM_USE_THRESHOLD) {
-//       showMemoryOveruseDialog();
-//     }
-//   }, 10000);
-// };
+const startMemMonitor = () => {
+  setInterval(() => {
+    if (os.freemem() < MEM_USE_THRESHOLD_MB) {
+      console.error("Memory used threshold breached")
+      // showMemoryOveruseDialog();
+    }
+  }, 10000);
+};
 
 export const startLocalNetwork = async (localNetworkPath: string) => {
   // const liteMode = await store.getLiteMode();
@@ -106,8 +107,8 @@ export const startLocalNetwork = async (localNetworkPath: string) => {
 //     },
 //   );
 
-//   txWs = new WebSocketClient(LOCAL_NETWORK_WS);
-//   blockWs = new WebSocketClient(LOCAL_NETWORK_WS);
+//   txWs = new WebsocketClient(LOCAL_NETWORK_WS);
+//   blockWs = new WebsocketClient(LOCAL_NETWORK_WS);
 
 //   localNetworkProcess.stdout.on('data', async (data) => {
 //     try {
