@@ -39,10 +39,10 @@ const localNetworkPath = '/Users/uditgulati/Documents/juno';
 //   });
 // console.log("startLog: ", startLog);
 
-(window as any).electron.invoke('downloadLocalNetwork', false)
-  .then(function(res: string) {
-    console.log(res); // will print "This worked!" to the browser console
-  })
-  .catch(function(err: Error) {
-    console.error(err); // will print "This didn't work!" to the browser console.
-  });
+// (window as any).electron.invoke('downloadLocalNetwork', false)
+//   .then(function(res: string) {
+//     console.log(res); // will print "This worked!" to the browser console
+//   })
+//   .catch(function(err: Error) {
+//     console.error(err); // will print "This didn't work!" to the browser console.
+//   });

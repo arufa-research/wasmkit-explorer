@@ -8,7 +8,10 @@ import React, { useEffect, useState, memo, useCallback } from 'react';
 import useAppRoutes from './hooks/routes';
 import NavLink from './components/NavLink';
 
-// import StateListeners from './context/ElectronContextProvider';
+import StateListeners from './context/ElectronContextProvider';
+
+import { useBlocks, useGetLatestHeight, useNetworkBlockUpdate } from './hooks/useBlocks';
+import Provider from './components/ConfigProvider';
 
 // import { tourProviderProps } from './utils';
 
@@ -37,8 +40,8 @@ const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalComponent, setModalComponent] = useState<any>();
   const navigate = useNavigate();
-  // const { terra } = useTerraBlockUpdate();
-  // const latestHeight = useGetLatestHeight();
+  const { network } = useNetworkBlockUpdate();
+  const latestHeight = useGetLatestHeight();
   // const isLocalTerraPathConfigured = useLocalTerraPathConfigured();
   // const hasStartedLocalTerra = useLocalTerraStarted();
 
@@ -193,19 +196,19 @@ const App = () => {
                   Current Block
                 </p>
                 <p className="text-lg md:leading-7 text-terra-text">
-                  {"326387263876"}
+                  {latestHeight}
                 </p>
               </li>
               <li className="flex-col px-2 font-medium text-xs text-terra-navy whitespace-nowrap">
                 <p className="text-terra-text-muted md:text-md">Network ID</p>
                 <p className="text-lg md:leading-7 text-terra-text">
-                  {"dummy-chain-99"}
+                  {network.config.chainID}
                 </p>
               </li>
               <li className="flex-col px-2 font-medium text-xs text-terra-navy whitespace-nowrap">
                 <p className="text-terra-text-muted md:text-md">RPC Server</p>
                 <p className="text-lg md:leading-7 text-terra-text">
-                  {"https://jidhfuodhfoudh"}
+                  {network.config.URL}
                 </p>
               </li>
               <li className="ml-auto">
@@ -257,13 +260,13 @@ const root = createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <React.StrictMode>
-    {/* <StateListeners /> */}
+    <StateListeners />
     {/* <TourProvider {...tourProviderProps}> */}
-      {/* <Provider> */}
+      <Provider>
         <BrowserRouter>
           <App />
         </BrowserRouter>
-      {/* </Provider> */}
+      </Provider>
     {/* </TourProvider> */}
   </React.StrictMode>,
 );

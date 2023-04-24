@@ -6,7 +6,7 @@ import yaml from 'js-yaml';
 import waitOn from 'wait-on';
 import { app } from 'electron';
 import { spawn, execSync } from 'child_process';
-import { WebsocketClient } from '@cosmjs/tendermint-rpc';
+import { WebSocketClient } from '@terra-money/terra.js';
 
 // import {
 //   showLocalNetworkStartNotif,
@@ -16,7 +16,7 @@ import { WebsocketClient } from '@cosmjs/tendermint-rpc';
 //   showCustomDialog,
 // } from './messages';
 // import { store } from './store';
-// import { setDockIconDisplay, parseTxDescriptionAndMsg } from './misc';
+import { setDockIconDisplay, parseTxDescriptionAndMsg } from '../utils';
 import { localNetworkState } from '../globals';
 // import exec = util.promisify('child_process').exec);
 
@@ -32,8 +32,8 @@ import {
   TX,
 } from '../../utils/constants';
 
-let txWs = new WebsocketClient(LOCAL_NETWORK_WS);
-let blockWs = new WebsocketClient(LOCAL_NETWORK_WS);
+let txWs = new WebSocketClient(LOCAL_NETWORK_WS);
+let blockWs = new WebSocketClient(LOCAL_NETWORK_WS);
 
 // const validateLocalNetworkPath = (url) => {
 //   try {
@@ -50,7 +50,7 @@ let blockWs = new WebsocketClient(LOCAL_NETWORK_WS);
 export const downloadLocalNetwork = async (startNetwork: boolean) => {
   // TODO: generalise to any cosmos chain
   const localNetworkPath = path.join(app.getPath('appData'), 'juno');
-  console.log("localNetworkPath: ", localNetworkPath);
+  // console.log("localNetworkPath: ", localNetworkPath);
   if (fs.existsSync(localNetworkPath)) {
     throw Error(`LocalNetwork already exists under the path '${localNetworkPath}'`);
   } else {
@@ -91,14 +91,13 @@ export const startLocalNetwork = async (localNetworkPath: string) => {
   return waitOn({ resources: ['http://localhost:26657'] });
 };
 
-export const subscribeToLocalNetworkEvents = async (win: any) => {
+export const subscribeToLocalNetworkEvents = async (win: any, localNetworkPath: string) => {
   // const [localNetworkPath, liteMode] = await Promise.all([
   //   store.getLocalNetworkPath(),
   //   store.getLiteMode(),
   // ]);
 
   // TODO: fetch it from user
-  const localNetworkPath = '';
   const liteMode = false;
 
   const localNetworkProcess = spawn(
@@ -112,8 +111,8 @@ export const subscribeToLocalNetworkEvents = async (win: any) => {
     },
   );
 
-  txWs = new WebsocketClient(LOCAL_NETWORK_WS);
-  blockWs = new WebsocketClient(LOCAL_NETWORK_WS);
+  txWs = new WebSocketClient(LOCAL_NETWORK_WS);
+  blockWs = new WebSocketClient(LOCAL_NETWORK_WS);
 
   localNetworkProcess.stdout.on('data', async (data) => {
     try {
@@ -121,20 +120,20 @@ export const subscribeToLocalNetworkEvents = async (win: any) => {
       win.webContents.send(NEW_LOG, data.toString());
 
       if (!localNetworkState.isRunning) {
-        // txWs.subscribeTx({}, async ({ value }) => {
-        //   const { description, msg } = parseTxDescriptionAndMsg(
-        //     value.TxResult.tx,
-        //   );
-        //   win.webContents.send(TX, { description, msg, ...value });
-        //   showTxOccuredNotif(description);
-        // });
+        txWs.subscribeTx({}, async ({ value }) => {
+          const { description, msg } = parseTxDescriptionAndMsg(
+            value.TxResult.tx,
+          );
+          // win.webContents.send(TX, { description, msg, ...value });
+          // showTxOccuredNotif(description);
+        });
 
-        // blockWs.subscribe(NEW_BLOCK, {}, ({ value }) => {
-        //   win.webContents.send(NEW_BLOCK, value);
-        // });
+        blockWs.subscribe(NEW_BLOCK, {}, ({ value }) => {
+          win.webContents.send(NEW_BLOCK, value);
+        });
 
-        // txWs.start();
-        // blockWs.start();
+        txWs.start();
+        blockWs.start();
 
         localNetworkState.isRunning = true;
         win.webContents.send(LOCAL_NETWORK_IS_RUNNING, true);
@@ -167,8 +166,8 @@ export const subscribeToLocalNetworkEvents = async (win: any) => {
 export const stopLocalNetwork = async (localNetworkPath: string) => {
   try {
     // const localNetworkPath = await store.getLocalNetworkPath();
-    txWs.disconnect();
-    blockWs.disconnect();
+    txWs.destroy();
+    blockWs.destroy();
 
     execSync('docker-compose stop', {
       cwd: localNetworkPath,

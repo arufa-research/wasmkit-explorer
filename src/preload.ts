@@ -2,6 +2,7 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
 import { contextBridge, ipcRenderer } from 'electron';
+// import { Coins, LCDClient, Wallet, LocalTerra } from '@terra-money/terra.js';
 
 contextBridge.exposeInMainWorld(
   'electron', {
@@ -16,5 +17,15 @@ contextBridge.exposeInMainWorld(
         return ipcRenderer.invoke(channel, data);
       }
     },
-  }
+    on(channel: string, listener: any) {
+      ipcRenderer.on(channel, (event, message) => {
+        listener(event, message);
+      });
+    },
+    removeListener(channel: string, listener: any) {
+      ipcRenderer.removeListener(channel, (event, message) => {
+        listener(event, message);
+      });
+    },
+  },
 );

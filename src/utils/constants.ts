@@ -13,3 +13,8 @@ export const LOCAL_NETWORK_PATH_CONFIGURED = 'localNetworkPathConfigured';
 
 
 export const MEM_USE_THRESHOLD_MB = 100 * 1024 * 1024; // 100MB
+
+const FINDER_ORIGIN = 'https://finder.terra.money';
+const DOCKER_ORIGIN = 'https://www.docker.com';
+const DOCS_ORIGIN = 'https://docs.terra.money';
+const LOCAL_TERRA_GIT = 'https://github.com/terra-money/LocalTerra.git';

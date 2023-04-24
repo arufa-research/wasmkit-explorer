@@ -2,19 +2,13 @@ import { Virtuoso } from 'react-virtuoso';
 import React, { useCallback } from 'react';
 import { Checkbox, FormControlLabel } from '@mui/material';
 
-// import { useBlocks } from '../hooks/terra';
-import BlockView, { TerrariumBlockInfo } from '../components/BlockView';
+import { useBlocks } from '../hooks/useBlocks';
+import BlockView from '../components/BlockView';
 
 export default function BlocksPage() {
   const [filter, setFilter] = React.useState(false);
-  // const state = useBlocks();
-  const data: {
-    blocks: TerrariumBlockInfo[],
-    latestHeight: number,
-  } = {
-    blocks: [],
-    latestHeight: 0,
-  }
+  const state = useBlocks();
+  const data = state.value;
   const gridTemplateColumns = '120px minmax(125px, 1fr) minmax(25px, 0.5fr) minmax(25px, 0.5fr) 75px';
 
   const handleToggleFilter = () => setFilter(!filter);
@@ -22,9 +16,9 @@ export default function BlocksPage() {
   const getFilteredBlocks = () => data.blocks.filter(({ block } : {block: any}) => block.data.txs!.length > 0);
 
   const toggleEventDetails = useCallback((index: number) => {
-    // data.blocks[index].merge({
-    //   hasEventsOpenInUi: !data.blocks[index].hasEventsOpenInUi,
-    // });
+    state.set(
+      st => {st.blocks[index].hasEventsOpenInUi = !st.blocks[index].hasEventsOpenInUi; return st;}
+    );
   }, [data]);
 
   return (

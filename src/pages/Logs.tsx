@@ -1,11 +1,10 @@
 import { Virtuoso } from 'react-virtuoso';
 
 import LogItemView from '../components/LogView';
-import { useGetLogs } from '../hooks/useGetLogs';
+import { useGetLogs } from '../hooks/useLogs';
 
 export default function LogsPage() {
   const logs = useGetLogs();
-  // const logs = ['difhidufh', 'fjhdfhdjfhj'];
 
   return (
     <div className="pl-4 w-full">
