@@ -124,7 +124,7 @@ export const subscribeToLocalNetworkEvents = async (win: any, localNetworkPath: 
           const { description, msg } = parseTxDescriptionAndMsg(
             value.TxResult.tx,
           );
-          // win.webContents.send(TX, { description, msg, ...value });
+          win.webContents.send(TX, { description, msg, ...value });
           // showTxOccuredNotif(description);
         });
 

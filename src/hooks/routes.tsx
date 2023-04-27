@@ -5,6 +5,7 @@ import { faUser, faTv, faBuildingLock } from '@fortawesome/free-solid-svg-icons'
 import LogsPage from '../pages/Logs';
 import BlocksPage from '../pages/Blocks';
 import AccountsPage from '../pages/Accounts';
+import TransactionsPage from '../pages/Transactions';
 // import { ReactComponent as AccountsIcon } from '../../assets/icons/menu/accounts.svg';
 // import { ReactComponent as BlocksIcon } from '../assets/icons/blocks.svg';
 // import { ReactComponent as TransactionsIcon } from '../../assets/icons/menu/transactions.svg';
@@ -44,12 +45,12 @@ const useAppRoutes = ({
       path: '/blocks',
       element: <BlocksPage />,
     },
-    // {
-    //   name: 'Transactions',
-    //   icon: <TransactionsIcon className="w-6 h-6" />,
-    //   path: '/transactions',
-    //   element: <TransactionsPage />,
-    // },
+    {
+      name: 'Transactions',
+      icon: <FontAwesomeIcon icon={faBuildingLock} />,
+      path: '/transactions',
+      element: <TransactionsPage />,
+    },
     {
       name: 'Logs',
       icon: <FontAwesomeIcon icon={faTv} />,

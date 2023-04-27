@@ -1,13 +1,16 @@
 import { useEffect } from 'react';
 
 import {
-  LOCAL_NETWORK_IS_RUNNING,
-  MAX_LOG_LENGTH,
-  NEW_BLOCK,
+  TX,
   NEW_LOG,
+  NEW_BLOCK,
+  MAX_LOG_LENGTH,
+  LOCAL_NETWORK_IS_RUNNING,
 } from '../utils/constants';
+import { txState } from './txsState';
 import { logsState } from './logsState';
 import { blockState } from './blocksState';
+import { NetworkTx } from '../types/Transaction';
 import { NetworkBlockInfo } from '../types/Block';
 import { localNetworkStarted } from './networkState';
 
@@ -18,9 +21,9 @@ const StateListeners = (): any => {
       blockState.blocks.set((p) => [...p, block]);
     });
 
-    // ipcRenderer.on(TX, (_: any, tx: TerrariumTx) => {
-    //   txState.merge([{ ...tx }]);
-    // });
+    (window as any).electron.on(TX, (_: any, tx: NetworkTx) => {
+      txState.merge([{ ...tx }]);
+    });
 
     (window as any).electron.on(NEW_LOG, async (_: any, log: string) => {
       if (logsState.length >= MAX_LOG_LENGTH) {
@@ -38,12 +41,15 @@ const StateListeners = (): any => {
     );
 
     return () => {
+      (window as any).electron.removeListener(TX);
       (window as any).electron.removeListener(NEW_LOG);
       (window as any).electron.removeListener(NEW_BLOCK);
       (window as any).electron.removeListener(LOCAL_NETWORK_IS_RUNNING);
     };
   }, [
+    txState,
     logsState,
+    blockState,
   ]);
 
   return null;

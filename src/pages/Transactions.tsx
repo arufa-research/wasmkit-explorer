@@ -1,10 +1,12 @@
+import { useCallback } from 'react';
 import { Virtuoso } from 'react-virtuoso';
+
+import { useTxs } from '../hooks/useTxs';
 import TransactionView from '../components/TransactionView';
-import { useTxs } from '../hooks/terra';
 
 export default function TransactionsPage() {
-  const { get: getTxs, set: setTxs } = useTxs();
-  const txs = getTxs();
+  const txs = useTxs();
+  const data = txs.value;
 
   const gridTemplateColumns = '150px 50px minmax(275px, 1fr) 100px minmax(100px, 1fr) 50px';
 
@@ -18,10 +20,11 @@ export default function TransactionsPage() {
     );
   }
 
-  const toggleEventDetails = (index: number) => {
-    txs[index].hasEventsOpenInUi = !txs[index].hasEventsOpenInUi;
-    setTxs(txs);
-  };
+  const toggleEventDetails = useCallback((index: number) => {
+    txs.set(
+      txs => {txs[index].hasEventsOpenInUi = !txs[index].hasEventsOpenInUi; return txs;}
+    );
+  }, [data]);
 
   return (
     <div className="flex flex-col w-full">
@@ -39,11 +42,11 @@ export default function TransactionsPage() {
         followOutput
         className="flex flex-col w-full scrollbar"
         style={{ overflow: 'overlay' }}
-        data={txs}
-        itemContent={(index, data) => (
+        data={data}
+        itemContent={(index, transaction) => (
           <TransactionView
             onToggleEventDetails={toggleEventDetails}
-            data={data}
+            data={transaction}
             key={index}
             index={index}
             gridTemplateColumns={gridTemplateColumns}
