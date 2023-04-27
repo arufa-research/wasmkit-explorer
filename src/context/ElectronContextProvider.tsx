@@ -10,8 +10,10 @@ import {
 import { txState } from './txsState';
 import { logsState } from './logsState';
 import { blockState } from './blocksState';
+// import { contractState } from './contractsState';
 import { NetworkTx } from '../types/Transaction';
 import { NetworkBlockInfo } from '../types/Block';
+// import { NetworkContract } from '../types/Contract';
 import { localNetworkStarted } from './networkState';
 
 const StateListeners = (): any => {
@@ -24,6 +26,10 @@ const StateListeners = (): any => {
     (window as any).electron.on(TX, (_: any, tx: NetworkTx) => {
       txState.merge([{ ...tx }]);
     });
+
+    // (window as any).electron.on(NEW_CONTRACT, (_: any, contract: NetworkContract) => {
+    //   contractState.set((p) => [...p, contract]);
+    // });
 
     (window as any).electron.on(NEW_LOG, async (_: any, log: string) => {
       if (logsState.length >= MAX_LOG_LENGTH) {

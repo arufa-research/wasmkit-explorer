@@ -22,9 +22,6 @@ import Provider from './components/ConfigProvider';
 // import { debounce } from 'lodash';
 // import { TOGGLE_LOCAL_TERRA, TOGGLE_DEBOUNCE_MS, GET_LOCAL_TERRA_STATUS } from '../public/constants';
 // import { NavLink, SettingsModal } from './components';
-// import {
-//   useTerraBlockUpdate, useGetLatestHeight, useLocalTerraPathConfigured, useLocalTerraStarted,
-// } from './hooks/terra';
 // import { parseSearchUrl } from './utils';
 // import { ReactComponent as TerraLogo } from '../assets/terra-logo.svg';
 // import TerraLogo from './assets/icons/accounts.svg';
@@ -92,11 +89,11 @@ const App = () => {
               />
             </h1> */}
           </div>
-          <div
+          {/* <div
             className={`tour__search flex items-center mt-6 bg-terra-darknavy border border-terra-text-muted rounded-lg py-3 ${
               !open ? 'px-2.5' : 'px-4'
             }`}
-          >
+          > */}
             {/* <BsSearch
               onClick={() => setOpen(true)}
               className={`text-white text-lg block cursor-pointer ${
@@ -112,7 +109,7 @@ const App = () => {
                 !open && 'hidden'
               }`}
             /> */}
-          </div>
+          {/* </div> */}
 
           {/* method 1 to show svg */}
           {/* <svg xmlns="http://www.w3.org/2000/svg" fill="inherit" className="w-6 h-6 aspect-square py-2 bi bi-person-circle" viewBox="0 0 16 16">

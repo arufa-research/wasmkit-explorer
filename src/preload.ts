@@ -10,7 +10,8 @@ contextBridge.exposeInMainWorld(
         'startLocalNetwork',
         'downloadLocalNetwork',
         'stopLocalNetwork',
-        'isDockerRunning'
+        'isDockerRunning',
+        'importDeployedContracts',
       ];
       if (validChannels.includes(channel)) {
         return ipcRenderer.invoke(channel, data);

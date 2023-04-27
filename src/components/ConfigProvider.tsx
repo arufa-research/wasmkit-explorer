@@ -7,7 +7,7 @@ export const NetworkContext = React.createContext({});
 
 const defaultConfig: INetworkConfig = {
   url: 'http://localhost:1317',
-  chainId: 'localterra',
+  chainId: 'testing-1',
 };
 
 const Provider = ({ children, config }: { children: any, config?: INetworkConfig }) => {

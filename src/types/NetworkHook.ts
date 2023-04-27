@@ -40,7 +40,7 @@ export class LocalNetwork {
   config: LocalNetworkConfig = {
     URL: 'http://localhost:1317/',
     RPC_URL: 'http://localhost:26657/',
-    chainID: 'localterra'
+    chainID: 'testing-1'
   };
   wallets: Record<string, string> = {
   'juno16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y': 'clip hire initial neck maid actor venue client foam budget lock catalog sweet steak waste crater broccoli pipe steak sister coyote moment obvious choose',
@@ -73,7 +73,9 @@ export class LocalNetwork {
     const queryResponse = await queryClient.queryContractSmart(
       contractAddress,
       queryMsg,
-    )
+    );
+
+    // queryClient.get
 
     return queryResponse;
   };

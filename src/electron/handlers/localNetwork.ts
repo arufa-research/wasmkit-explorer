@@ -7,6 +7,7 @@ import waitOn from 'wait-on';
 import { app } from 'electron';
 import { spawn, execSync } from 'child_process';
 import { WebSocketClient } from '@terra-money/terra.js';
+import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 
 // import {
 //   showLocalNetworkStartNotif,
@@ -31,6 +32,7 @@ import {
   NEW_BLOCK,
   TX,
 } from '../../utils/constants';
+import { NetworkContract } from '../../types/Contract';
 
 let txWs = new WebSocketClient(LOCAL_NETWORK_WS);
 let blockWs = new WebSocketClient(LOCAL_NETWORK_WS);
@@ -216,4 +218,32 @@ export const isDockerRunning = async () => {
     }
     // await showCustomDialog(JSON.stringify(err));
   }
+};
+
+export const importDeployedContracts = async () => {
+  const queryClient = await CosmWasmClient.connect(
+    'http://localhost:26657'
+  );
+
+  // fetch all codeIds on network
+  let codeIds = await queryClient.getCodes();
+
+  // fetch contract addresses for each codeId
+  let allAddresses: string[] = [];
+  for (const codeId of codeIds) {
+    const addresses = await queryClient.getContracts(codeId.id);
+    allAddresses = allAddresses.concat(addresses);
+  }
+
+  let allContracts: NetworkContract[] = [];
+  for (const address of allAddresses) {
+    const contractDetails = await queryClient.getContract(address);
+    allContracts.push({
+      name: contractDetails.label,
+      address: contractDetails.address,
+      codeId: contractDetails.codeId,
+      creator: contractDetails.creator,
+    })
+  }
+  return allContracts;
 };

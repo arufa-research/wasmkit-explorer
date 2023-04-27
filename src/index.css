@@ -451,7 +451,7 @@ video {
   --tw-ring-inset:  ;
   --tw-ring-offset-width: 0px;
   --tw-ring-offset-color: #fff;
-  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-color:    #ef827c;
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-ring-shadow: 0 0 #0000;
   --tw-shadow: 0 0 #0000;
@@ -498,7 +498,7 @@ video {
   --tw-ring-inset:  ;
   --tw-ring-offset-width: 0px;
   --tw-ring-offset-color: #fff;
-  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-color:    #ef827c;
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-ring-shadow: 0 0 #0000;
   --tw-shadow: 0 0 #0000;
@@ -545,7 +545,7 @@ video {
   --tw-ring-inset:  ;
   --tw-ring-offset-width: 0px;
   --tw-ring-offset-color: #fff;
-  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-color:    #ef827c;
   --tw-ring-offset-shadow: 0 0 #0000;
   --tw-ring-shadow: 0 0 #0000;
   --tw-shadow: 0 0 #0000;
@@ -1155,7 +1155,7 @@ video {
 
 .border-terra-navy {
   --tw-border-opacity: 1 !important;
-  border-color: rgb(14 35 99 / var(--tw-border-opacity)) !important;
+  border-color: rgb(17 15 15 / var(--tw-border-opacity)) !important;
 }
 
 .border-terra-text-muted {
@@ -1195,7 +1195,7 @@ video {
 
 .bg-terra-button-primary {
   --tw-bg-opacity: 1 !important;
-  background-color: rgb(7 89 231 / var(--tw-bg-opacity)) !important;
+  background-color: rgb(239 130 124 / var(--tw-bg-opacity)) !important;
 }
 
 .bg-terra-button-secondary {
@@ -1210,7 +1210,7 @@ video {
 
 .bg-terra-navy {
   --tw-bg-opacity: 1 !important;
-  background-color: rgb(14 35 99 / var(--tw-bg-opacity)) !important;
+  background-color: rgb(17 15 15 / var(--tw-bg-opacity)) !important;
 }
 
 .bg-transparent {
@@ -1227,11 +1227,11 @@ video {
 }
 
 .fill-terra-link {
-  fill: #459CF4 !important;
+  fill: #f6a8a4 !important;
 }
 
 .fill-terra-text {
-  fill: #2043B5 !important;
+  fill: #ef827c !important;
 }
 
 .fill-terra-text-grey {
@@ -1543,7 +1543,7 @@ video {
 
 .text-terra-navy {
   --tw-text-opacity: 1 !important;
-  color: rgb(14 35 99 / var(--tw-text-opacity)) !important;
+  color: rgb(17 15 15 / var(--tw-text-opacity)) !important;
 }
 
 .text-terra-text {
@@ -1567,7 +1567,7 @@ video {
 }
 
 .decoration-terra-text {
-  text-decoration-color: #2043B5 !important;
+  text-decoration-color: #ef827c !important;
 }
 
 .shadow {
@@ -1656,11 +1656,11 @@ video {
 }
 
 .hover\:fill-terra-button-primary:hover {
-  fill: #0759E7 !important;
+  fill: #ef827c !important;
 }
 
 .hover\:fill-terra-navy:hover {
-  fill: #0E2363 !important;
+  fill: #783b37 !important;
 }
 
 .hover\:fill-white:hover {
