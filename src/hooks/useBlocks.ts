@@ -1,20 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 import { useHookstate } from '@hookstate/core';
-import { LocalTerra } from '@terra-money/terra.js';
 
 import { TX } from "../utils/constants";
-import { useNetwork } from "./useNetwork";
+import { useNetworkConnector } from "./useNetwork";
 import { blockState } from "../context/blocksState";
 import { NetworkContext } from "../components/ConfigProvider";
-import { INetworkHookBlockUpdate } from "../types/NetworkHook";
+import { INetworkHookBlockUpdate, LocalNetwork } from "../types/NetworkHook";
 
 export function useNetworkBlockUpdate() {
-  const network = useContext(NetworkContext) as LocalTerra;
+  const network = useContext(NetworkContext) as LocalNetwork;
   const hookExport: INetworkHookBlockUpdate = {
-    ...useNetwork(),
-    getBalance: async (address: string) => {
-      const [coins] = await network.bank.balance(address);
-      return coins.toData();
+    ...useNetworkConnector(),
+    getBalance: async (address: string, denom: string) => {
+      const coin = await network.getBalance(address, denom);
+      return coin;
     },
     listenToAccountTx(address: string, cb: Function) {
       const listener = (_: any, tx: any) => {
@@ -42,10 +41,10 @@ export const useGetLatestHeight = () => {
 };
 
 export function useGetTxFromHeight(height?: number) {
-  const terra = useContext(NetworkContext) as LocalTerra;
+  const network = useContext(NetworkContext) as LocalNetwork;
   const [txInfo, setInfo] = useState([]);
   useEffect(() => {
-    terra.tx.txInfosByHeight(height).then((tx) => {
+    network.getTxnInfoByHeight(height).then((tx) => {
       setInfo(tx as never[]);
     });
   }, []);

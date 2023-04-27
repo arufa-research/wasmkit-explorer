@@ -1,7 +1,7 @@
 import React from 'react';
-import { LocalTerra } from '@terra-money/terra.js';
 
 import { INetworkConfig } from '../types/NetworkConfig';
+import { LocalNetwork } from '../types/NetworkHook';
 
 export const NetworkContext = React.createContext({});
 
@@ -12,7 +12,7 @@ const defaultConfig: INetworkConfig = {
 
 const Provider = ({ children, config }: { children: any, config?: INetworkConfig }) => {
   // TODO: Replace LocalTerra with a generalised wrapped over LCDClient
-  const localConfig = React.useMemo(() => new LocalTerra(), [config]);
+  const localConfig = React.useMemo(() => new LocalNetwork(), [config]);
   return (
     <NetworkContext.Provider value={localConfig}>
       {children}

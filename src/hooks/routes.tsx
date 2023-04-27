@@ -2,8 +2,9 @@ import { useRoutes } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faTv, faBuildingLock } from '@fortawesome/free-solid-svg-icons';
 
-import BlocksPage from '../pages/Blocks';
 import LogsPage from '../pages/Logs';
+import BlocksPage from '../pages/Blocks';
+import AccountsPage from '../pages/Accounts';
 // import { ReactComponent as AccountsIcon } from '../../assets/icons/menu/accounts.svg';
 // import { ReactComponent as BlocksIcon } from '../assets/icons/blocks.svg';
 // import { ReactComponent as TransactionsIcon } from '../../assets/icons/menu/transactions.svg';
@@ -26,17 +27,17 @@ const useAppRoutes = ({
     //   path: '/',
     //   element: <ContractsPage />,
     // },
-    // {
-    //   name: 'Accounts',
-    //   icon: <AccountsIcon className="w-6 h-6" />,
-    //   path: '/accounts',
-    //   element: (
-    //     <AccountsPage
-    //       handleToggleClose={handleToggleClose}
-    //       handleToggleOpen={handleToggleOpen}
-    //     />
-    //   ),
-    // },
+    {
+      name: 'Accounts',
+      icon: <FontAwesomeIcon icon={faUser} />,
+      path: '/accounts',
+      element: (
+        <AccountsPage
+          handleToggleClose={handleToggleClose}
+          handleToggleOpen={handleToggleOpen}
+        />
+      ),
+    },
     {
       name: 'Blocks',
       icon: <FontAwesomeIcon icon={faBuildingLock} />,

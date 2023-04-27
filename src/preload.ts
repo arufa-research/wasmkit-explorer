@@ -2,7 +2,6 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
 import { contextBridge, ipcRenderer } from 'electron';
-// import { Coins, LCDClient, Wallet, LocalTerra } from '@terra-money/terra.js';
 
 contextBridge.exposeInMainWorld(
   'electron', {

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, session } from 'electron';
 
 import {
   isDockerRunning,
@@ -24,6 +24,7 @@ const createWindow = (): void => {
     height: 1200,
     width: 1600,
     webPreferences: {
+      webSecurity: false,
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   });
@@ -45,6 +46,23 @@ const createWindow = (): void => {
       await subscribeToLocalNetworkEvents(mainWindow, localNetworkPath);
       // globals.localTerra.process = await subscribeToLocalTerraEvents(mainWindow);
     }
+  });
+
+  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+        'Content-Security-Policy': [
+          `default-src * self blob: data: gap:; 
+          style-src * self 'unsafe-inline' blob: data: gap:; 
+          script-src * 'self' 'unsafe-eval' 'unsafe-inline' blob: data: gap:; 
+          object-src * 'self' blob: data: gap:; 
+          img-src * self 'unsafe-inline' blob: data: gap:; 
+          connect-src self * 'unsafe-inline' blob: data: gap:; 
+          frame-src * self blob: data: gap:;`
+        ]
+      }
+    })
   });
 };
 
@@ -74,8 +92,6 @@ app.on('activate', () => {
 // code. You can also put them in separate files and import them here.
 
 ipcMain.on('get-preload-path', (e) => {
-  console.log("window created hdjfhdoif");
-
   e.returnValue = MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY;
 });
 
