@@ -88,7 +88,6 @@ export class LocalNetwork {
       address,
       denom,
     );
-    console.log("balanceResponse: ", balanceResponse);
 
     return balanceResponse;
   }

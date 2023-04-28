@@ -20,7 +20,7 @@ const ContractMethodsView = ({
   const [contractRes, setContractRes] = useState({});
   const [targetIndex, setTargetIndex] = useState<number>();
 
-  console.log('wallet: ', wallet);
+  // console.log('wallet: ', wallet);
 
   const handleResClose = () => setTargetIndex(undefined);
 
