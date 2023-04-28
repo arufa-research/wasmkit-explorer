@@ -52,7 +52,6 @@ let blockWs = new WebSocketClient(LOCAL_NETWORK_WS);
 export const downloadLocalNetwork = async (startNetwork: boolean) => {
   // TODO: generalise to any cosmos chain
   const localNetworkPath = path.join(app.getPath('appData'), 'juno');
-  // console.log("localNetworkPath: ", localNetworkPath);
   if (fs.existsSync(localNetworkPath)) {
     throw Error(`LocalNetwork already exists under the path '${localNetworkPath}'`);
   } else {
@@ -78,35 +77,48 @@ export const startMemMonitor = () => {
   }, 10000);
 };
 
-export const startLocalNetwork = async (localNetworkPath: string) => {
+export const startLocalNetwork = async (localNetworkName: string) => {
   // const liteMode = await store.getLiteMode();
-  const liteMode = false;
-  execSync(
-    `${LOCAL_NETWORK_CFG} docker-compose up ${liteMode ? 'junod' : ''} -d --wait --remove-orphans`,
-    {
-      cwd: localNetworkPath,
-      env: {
-        PATH: `${process.env.PATH}:/usr/local/bin/`,
-      },
-    },
-  );
+
+  try {
+    const isContainerRunning = execSync(`docker ps | grep ${localNetworkName}`);
+    console.log("isContainerRunning: ", isContainerRunning);
+  } catch {
+    try {
+      execSync(
+        `
+        docker run -d --name ${localNetworkName} -p 1317:1317 -p 26656:26656 -p 26657:26657 -p 16657:16657 -p 8090:9090 -e RUN_BACKGROUND=0 uditgulati0/${localNetworkName}:latest
+        `,
+        {
+          env: {
+            PATH: `${process.env.PATH}:/usr/local/bin/`,
+          },
+        },
+      );
+    } catch {
+      execSync(
+        `
+        docker start ${localNetworkName}
+        `,
+        {
+          env: {
+            PATH: `${process.env.PATH}:/usr/local/bin/`,
+          },
+        },
+      );
+    }
+  }
   return waitOn({ resources: ['http://localhost:26657'] });
 };
 
-export const subscribeToLocalNetworkEvents = async (win: any, localNetworkPath: string) => {
-  // const [localNetworkPath, liteMode] = await Promise.all([
-  //   store.getLocalNetworkPath(),
-  //   store.getLiteMode(),
-  // ]);
-
+export const subscribeToLocalNetworkEvents = async (win: any, localNetworkName: string) => {
   // TODO: fetch it from user
   const liteMode = false;
 
   const localNetworkProcess = spawn(
     'docker',
-    ['compose', 'logs', ...(liteMode ? ['terrad'] : []), '-f'],
+    ['logs', `${localNetworkName}`, '-f'],
     {
-      cwd: localNetworkPath,
       env: {
         PATH: `${process.env.PATH}:/usr/local/bin/`,
       },
@@ -165,14 +177,12 @@ export const subscribeToLocalNetworkEvents = async (win: any, localNetworkPath: 
 
 // TODO: use path type instead of string to 
 // make it platform agnostic (should work on windows, linux and mac)
-export const stopLocalNetwork = async (localNetworkPath: string) => {
+export const stopLocalNetwork = async (localNetworkName: string) => {
   try {
-    // const localNetworkPath = await store.getLocalNetworkPath();
     txWs.destroy();
     blockWs.destroy();
 
-    execSync('docker-compose stop', {
-      cwd: localNetworkPath,
+    execSync(`docker stop ${localNetworkName}`, {
       env: {
         PATH: `${process.env.PATH}:/usr/local/bin/`, // TODO: this is a hack, find a better way to do this
       },

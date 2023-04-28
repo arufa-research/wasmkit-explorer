@@ -29,8 +29,7 @@
 import './App';
 import './index.css';
 
-const localNetworkPath = '/Users/uditgulati/Documents/juno';
-// (window as any).electron.invoke('startLocalNetwork', localNetworkPath)
+// (window as any).electron.invoke('startLocalNetwork', localNetworkName)
 //   .then(function(res: string) {
 //     console.log(res); // will print "This worked!" to the browser console
 //   })
