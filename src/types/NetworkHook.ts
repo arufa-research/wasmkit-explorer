@@ -43,7 +43,7 @@ export class LocalNetwork {
     chainID: 'testing-1'
   };
   wallets: Record<string, string> = {
-  'juno16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y': 'clip hire initial neck maid actor venue client foam budget lock catalog sweet steak waste crater broccoli pipe steak sister coyote moment obvious choose',
+  'neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2': 'banner spread envelope side kite person disagree path silver will brother under couch edit food venture squirrel civil budget number acquire point work mass',
   };
 
   constructor() {
@@ -52,8 +52,8 @@ export class LocalNetwork {
 
   getTestAccounts(): any {
     return [{
-      accAddress: 'juno16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y',
-      mnemonic: this.wallets['juno16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y'],
+      accAddress: 'neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2',
+      mnemonic: this.wallets['neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2'],
     }];
   }
 
@@ -94,10 +94,10 @@ export class LocalNetwork {
 
   async execute(executeMsg: any, contractAddress: string): Promise<any> {
     const wallet = await DirectSecp256k1HdWallet.fromMnemonic(
-      this.wallets['juno16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y'],
+      this.wallets['neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2'],
       {
         hdPaths: [makeCosmoshubPath(0)],
-        prefix: "juno"
+        prefix: "neutron"
       }
     );
     const client = await SigningCosmWasmClient.connectWithSigner(
@@ -106,11 +106,11 @@ export class LocalNetwork {
     );
 
     const exeuteResponse = await client.execute(
-      'juno16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y',
+      'neutron1m9l358xunhhwds0568za49mzhvuxx9ux8xafx2',
       contractAddress,
       executeMsg,
       {
-        amount: [{ amount: "300000", denom: "ujunox" }],
+        amount: [{ amount: "300000", denom: "untrn" }],
         gas: "500000"
       },
       undefined,

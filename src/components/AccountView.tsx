@@ -25,7 +25,7 @@ function AccountView({
   const [balance, setBalance] = useState(0.0);
   const { getBalance } = useNetworkBlockUpdate();
   const hasStartedLocalNetwork = useLocalNetworkStarted();
-  const denom = 'ujunox';
+  const denom = 'untrn';
 
   useEffect(() => {
     if (!hasStartedLocalNetwork.get()) return;

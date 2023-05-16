@@ -40,11 +40,11 @@ const createWindow = (): void => {
     mainWindow.show();
     mainWindow.focus();
 
-    const localNetworkPath = '/Users/uditgulati/Documents/juno';
-    if (localNetworkPath) {
+    const localNetworkName = 'neutron-node';
+    if (localNetworkName) {
       // mainWindow.webContents.send(LOCAL_NETWORK_PATH_CONFIGURED, true);
-      await startLocalNetwork(localNetworkPath);
-      await subscribeToLocalNetworkEvents(mainWindow, localNetworkPath);
+      await startLocalNetwork(localNetworkName);
+      await subscribeToLocalNetworkEvents(mainWindow, localNetworkName);
       // globals.localTerra.process = await subscribeToLocalTerraEvents(mainWindow);
     }
   });
@@ -96,8 +96,8 @@ ipcMain.on('get-preload-path', (e) => {
   e.returnValue = MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY;
 });
 
-ipcMain.handle('startLocalNetwork', async (event, localNetworkPath: string) => {
-  await startLocalNetwork(localNetworkPath);
+ipcMain.handle('startLocalNetwork', async (event, localNetworkName: string) => {
+  await startLocalNetwork(localNetworkName);
   return "local network started"; 
 });
 
@@ -106,8 +106,8 @@ ipcMain.handle('downloadLocalNetwork', async (event, startNetwork: boolean) => {
   return "local network downloaded"; 
 });
 
-ipcMain.handle('stopLocalNetwork', async (event, localNetworkPath: string) => {
-  await stopLocalNetwork(localNetworkPath);
+ipcMain.handle('stopLocalNetwork', async (event, localNetworkName: string) => {
+  await stopLocalNetwork(localNetworkName);
   return "local network stopped"; 
 });
 
