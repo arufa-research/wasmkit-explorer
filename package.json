@@ -1,8 +1,8 @@
 {
-  "name": "my-app",
-  "productName": "my-app",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "name": "wasmkit-explorer",
+  "productName": "wasmkit-explorer",
+  "version": "0.2.5",
+  "description": "A localnetwork explorer for CosmosSDK based chain running locally",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -24,6 +24,7 @@
     "@electron-forge/maker-squirrel": "^6.1.1",
     "@electron-forge/maker-zip": "^6.1.1",
     "@electron-forge/plugin-webpack": "^6.1.1",
+    "@electron-forge/publisher-github": "^6.1.1",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@types/react-router-dom": "^5.3.3",
