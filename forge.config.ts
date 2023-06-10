@@ -35,10 +35,10 @@ const config: ForgeConfig = {
       name: '@electron-forge/publisher-github',
       config: {
         repository: {
-          owner: 'udit-gulati',
+          owner: 'arufa-research',
           name: 'wasmkit-explorer'
         },
-	draft: true
+	      draft: true
       }
     }
   ]
