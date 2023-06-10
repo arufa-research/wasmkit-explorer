@@ -38,7 +38,7 @@ const config: ForgeConfig = {
           owner: 'udit-gulati',
           name: 'wasmkit-explorer'
         },
-        prerelease: true
+	draft: true
       }
     }
   ]
