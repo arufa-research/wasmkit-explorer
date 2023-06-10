@@ -21,8 +21,8 @@ export default function TransactionsPage() {
   }
 
   const toggleEventDetails = useCallback((index: number) => {
-    txs.set(
-      txs => {txs[index].hasEventsOpenInUi = !txs[index].hasEventsOpenInUi; return txs;}
+    txs[index].hasEventsOpenInUi.set(
+      value => {return !value;}
     );
   }, [data]);
 

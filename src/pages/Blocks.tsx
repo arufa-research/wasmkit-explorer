@@ -16,8 +16,8 @@ export default function BlocksPage() {
   const getFilteredBlocks = () => data.blocks.filter(({ block } : {block: any}) => block.data.txs!.length > 0);
 
   const toggleEventDetails = useCallback((index: number) => {
-    state.set(
-      st => {st.blocks[index].hasEventsOpenInUi = !st.blocks[index].hasEventsOpenInUi; return st;}
+    state.blocks[index].hasEventsOpenInUi.set(
+      value => {return !value;}
     );
   }, [data]);
 
