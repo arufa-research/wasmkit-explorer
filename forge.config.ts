@@ -30,6 +30,18 @@ const config: ForgeConfig = {
       },
     }),
   ],
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: 'udit-gulati',
+          name: 'wasmkit-explorer'
+        },
+        prerelease: true
+      }
+    }
+  ]
 };
 
 export default config;

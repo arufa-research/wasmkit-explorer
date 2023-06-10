@@ -1,4 +1,4 @@
-import { bech32 } from 'bech32';
+import bech32 from 'bech32';
 import { REACT_APP_FINDER_URL, REACT_APP_DOCS_URL } from './constants';
 
 function isValidNetworkAddress(address: string, prefix: string) {
