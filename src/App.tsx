@@ -12,6 +12,9 @@ import StateListeners from './context/ElectronContextProvider';
 
 import { useBlocks, useGetLatestHeight, useNetworkBlockUpdate } from './hooks/useBlocks';
 import Provider from './components/ConfigProvider';
+import NetworkSwitch from './components/network-config/NetworkSwitch';
+import CustomNetworkForm from './components/network-config/CustomNetworkForm';
+import networkConfig from "./utils/networkConfig.json"
 
 // import { tourProviderProps } from './utils';
 
@@ -41,6 +44,13 @@ const App = () => {
   const latestHeight = useGetLatestHeight();
   // const isLocalTerraPathConfigured = useLocalTerraPathConfigured();
   // const hasStartedLocalTerra = useLocalTerraStarted();
+
+  useEffect(() => {
+    const chains = localStorage.getItem('chainConfig');
+    if(!chains){
+      localStorage.setItem('chainConfig',JSON.stringify(networkConfig))
+    }
+  }, []);
 
   const handleToggleOpen = (modalName: any) => {
     setModalComponent(modalName);
@@ -232,7 +242,10 @@ const App = () => {
                 </button> */}
               </li>
             </ul>
+          <NetworkSwitch/>
+          {/* <CustomNetworkForm/> */}
           </header>
+
           <main className="flex w-full h-full overflow-hidden pt-[92px]">
             {routes}
           </main>

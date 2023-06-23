@@ -1,0 +1,34 @@
+.network-selector-wrapper{
+    width: 100px;
+}
+.network-selector-wrapper button{
+ padding: 5px;
+ border-radius: 10px;
+ background-color: #ef827c;
+}
+.network-selector-wrapper input{
+    border: 1px solid black;
+    border-radius: 10px;
+}
+.network-selector{
+    position: relative;
+    cursor: pointer;
+    border: 1px solid black;
+}
+.chain-drop-down{
+    display:none;
+    position: absolute;
+    border: 1px solid black;
+    background-color: white;
+    /* background-color: gray; */
+    /* right: 0; */
+}
+.network-selector:hover .chain-drop-down{
+    display: block;
+}
+.custom-network-form{
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+}

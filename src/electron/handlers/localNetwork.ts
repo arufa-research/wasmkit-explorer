@@ -56,12 +56,12 @@ export const downloadLocalNetwork = async (startNetwork: boolean) => {
   if (fs.existsSync(localNetworkPath)) {
     throw Error(`LocalNetwork already exists under the path '${localNetworkPath}'`);
   } else {
-    execSync(`git clone ${LOCAL_NETWORK_GIT} --depth 1`, {
-      cwd: app.getPath('appData'),
-      env: {
-        PATH: `${process.env.PATH}:/usr/local/bin/`,
-      },
-    });
+    // execSync(`git clone ${LOCAL_NETWORK_GIT} --depth 1`, {
+    //   cwd: app.getPath('appData'),
+    //   env: {
+    //     PATH: `${process.env.PATH}:/usr/local/bin/`,
+    //   },
+    // });
     if (startNetwork) {
       await startLocalNetwork(localNetworkPath);
     }
@@ -81,15 +81,15 @@ export const startMemMonitor = () => {
 export const startLocalNetwork = async (localNetworkPath: string) => {
   // const liteMode = await store.getLiteMode();
   const liteMode = false;
-  execSync(
-    `${LOCAL_NETWORK_CFG} docker-compose up ${liteMode ? 'junod' : ''} -d --wait --remove-orphans`,
-    {
-      cwd: localNetworkPath,
-      env: {
-        PATH: `${process.env.PATH}:/usr/local/bin/`,
-      },
-    },
-  );
+  // execSync(
+  //   `${LOCAL_NETWORK_CFG} docker-compose up ${liteMode ? 'junod' : ''} -d --wait --remove-orphans`,
+  //   {
+  //     cwd: localNetworkPath,
+  //     env: {
+  //       PATH: `${process.env.PATH}:/usr/local/bin/`,
+  //     },
+  //   },
+  // );
   return waitOn({ resources: ['http://localhost:26657'] });
 };
 
@@ -171,12 +171,12 @@ export const stopLocalNetwork = async (localNetworkPath: string) => {
     txWs.destroy();
     blockWs.destroy();
 
-    execSync('docker-compose stop', {
-      cwd: localNetworkPath,
-      env: {
-        PATH: `${process.env.PATH}:/usr/local/bin/`, // TODO: this is a hack, find a better way to do this
-      },
-    });
+    // execSync('docker-compose stop', {
+    //   cwd: localNetworkPath,
+    //   env: {
+    //     PATH: `${process.env.PATH}:/usr/local/bin/`, // TODO: this is a hack, find a better way to do this
+    //   },
+    // });
 
     // localNetworkState.isRunning = false;
     // showLocalNetworkStopNotif();
@@ -206,11 +206,11 @@ export const stopLocalNetwork = async (localNetworkPath: string) => {
 
 export const isDockerRunning = async () => {
   try {
-    execSync('docker ps', {
-      env: {
-        PATH: `${process.env.PATH}:/usr/local/bin/`,
-      },
-    });
+    // execSync('docker ps', {
+    //   env: {
+    //     PATH: `${process.env.PATH}:/usr/local/bin/`,
+    //   },
+    // });
     return true;
   } catch (err) {
     if (JSON.stringify(err).includes('Cannot connect to the Docker daemon')) {

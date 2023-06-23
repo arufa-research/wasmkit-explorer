@@ -43,8 +43,8 @@ const createWindow = (): void => {
     const localNetworkPath = '/Users/uditgulati/Documents/juno';
     if (localNetworkPath) {
       // mainWindow.webContents.send(LOCAL_NETWORK_PATH_CONFIGURED, true);
-      await startLocalNetwork(localNetworkPath);
-      await subscribeToLocalNetworkEvents(mainWindow, localNetworkPath);
+      // await startLocalNetwork(localNetworkPath);
+      // await subscribeToLocalNetworkEvents(mainWindow, localNetworkPath);
       // globals.localTerra.process = await subscribeToLocalTerraEvents(mainWindow);
     }
   });

@@ -1,0 +1,22 @@
+{
+    "networks":[
+        {
+            "name":"JUNO",
+            "chainId":"juno-1",
+            "rpcUrl":"http://localhost:1317/",
+            "restUrl":"http://localhost:26657/"
+        },
+        {
+            "name":"SCRT",
+            "chainId":"secret-1",
+            "rpcUrl":"http://localhost:1317/",
+            "restUrl":"http://localhost:26657/"
+        },
+        {
+            "name":"OSMO",
+            "chainId":"osmosis-1",
+            "rpcUrl":"http://localhost:1317/",
+            "restUrl":"http://localhost:26657/"
+        }
+    ]
+}
