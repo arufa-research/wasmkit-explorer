@@ -15,6 +15,7 @@ import Provider from './components/ConfigProvider';
 import NetworkSwitch from './components/network-config/NetworkSwitch';
 import CustomNetworkForm from './components/network-config/CustomNetworkForm';
 import networkConfig from "./utils/networkConfig.json"
+import { useWebSocket } from './hooks/useWebSocket';
 
 // import { tourProviderProps } from './utils';
 
@@ -42,6 +43,7 @@ const App = () => {
   const navigate = useNavigate();
   const { network } = useNetworkBlockUpdate();
   const latestHeight = useGetLatestHeight();
+  const {blockWSClient,txnWSClient} = useWebSocket();
   // const isLocalTerraPathConfigured = useLocalTerraPathConfigured();
   // const hasStartedLocalTerra = useLocalTerraStarted();
 
