@@ -50,6 +50,10 @@ export class LocalNetwork {
 
   };
 
+  setNetworkConfig(newConfig:LocalNetworkConfig){
+    this.config = newConfig;
+  }
+
   getTestAccounts(): any {
     return [{
       accAddress: 'juno16g2rahf5846rxzp3fwlswy08fz8ccuwk03k57y',

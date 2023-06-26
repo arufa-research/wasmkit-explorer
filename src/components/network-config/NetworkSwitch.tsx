@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {networks} from "../../utils/networkConfig.json"
 import { chainConfig } from "../../../src/types/NetworkConfig";
 import "./switch.css";
 import CustomNetworkForm from "./CustomNetworkForm";
+import { NetworkContext } from "../ConfigProvider";
+import { LocalNetwork } from "../../../src/types/NetworkHook";
 const NetworkSwitch = () => {
   const [curChain, setCurChain] = useState(networks[0].name);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const network = useContext(NetworkContext) as LocalNetwork;
   let chains:any = JSON.parse(localStorage.getItem('chainConfig'));
 
   const handleTokenSelect = (n:chainConfig)=>{
     console.log(n.name);
     setCurChain(n.name);
+    network.setNetworkConfig({
+      chainID:n.chainId,
+      RPC_URL:n.rpcUrl,
+      URL:n.restUrl
+    });
   }
   const displayForm = ()=>{
     setIsFormOpen(!isFormOpen);
